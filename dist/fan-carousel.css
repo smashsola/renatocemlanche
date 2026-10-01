@@ -7,3 +7,4 @@
 @media(min-width:1024px){.fan-card{width:16rem;height:23rem;left:calc(50% - 8rem)}.fan-layout{height:35rem}.fan-caption h3{font-size:1.8rem}.fan-caption p{font-size:.85rem}.fan-caption strong{font-size:1.2rem}}
 @media(min-width:1024px){.popular-section .section-heading{margin-bottom:8px}.fan-root>section{padding-top:8px;padding-bottom:8px}.fan-card{top:1.5rem}.fan-layout{height:34rem}.fan-root section>div:last-child{margin-top:2.5rem}.fan-root section>div:last-child>button{background:#e52b22;color:#fff;border-color:#c82018;box-shadow:0 4px 12px #a61d1830}.fan-root section>div:last-child>button:hover{background:#c82018;color:#fff}.fan-root section>div:last-child>div>span{background:#18171140}.fan-root section>div:last-child>div>span.scale-\[1\.3\]{background:#e52b22}}
 @media(min-width:1024px){.fan-card{top:4rem}.fan-layout{height:37rem}.fan-root section>div:last-child{margin-top:1.5rem}}
+@media(min-width:1024px){.fan-card{top:5.5rem}.fan-layout{height:38.5rem}}

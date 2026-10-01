@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="operations.css?v=1.21.0">
   <link rel="stylesheet" href="header.css?v=1.21.0">
   <link rel="preload" as="image" href="assets/burger.webp">
+<link rel="stylesheet" href="fan-carousel.css?v=1.25.0">
 </head>
 <body>
   <a class="skip-link" href="#cardapio">Pular para o cardápio</a>
@@ -34,7 +35,7 @@
       </div>
       <div class="hero-bottom"><span>DO SEU JEITO, FEITO NA HORA.</span><span>ESCOLHE O SEU AQUI EMBAIXO ↓</span></div>
     </section>
-    <section class="menu-section popular-section" id="mais-pedidos" aria-labelledby="popular-title"><div class="section-heading"><div><p class="eyebrow">OS FAVORITOS</p><h2 id="popular-title">MAIS PEDIDOS</h2></div><p>Os favoritos de quem chega com fome.</p></div><div class="product-grid" id="popular-products"></div></section>
+    <section class="menu-section popular-section" id="mais-pedidos" aria-labelledby="popular-title"><div class="section-heading"><div><p class="eyebrow">OS FAVORITOS</p><h2 id="popular-title">MAIS PEDIDOS</h2></div><p>Os favoritos de quem chega com fome.</p></div><div class="fan-root" id="popular-products"></div></section>
     <section class="menu-section" id="cardapio" aria-labelledby="menu-title">
       <div class="section-heading"><div><p class="eyebrow">O QUE VAI SER HOJE?</p><h2 id="menu-title">FOME GRANDE.<br><span>ESCOLHA FÁCIL.</span></h2></div><p>Escolha o seu lanche.<br>Os adicionais ficam no pedido.</p></div>
       <button class="button menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="menu-content">ABRIR CARDÁPIO <span aria-hidden="true">+</span></button>
@@ -58,6 +59,7 @@
   <script type="module" src="js/hero.js?v=1.21.0"></script>
   <script type="module" src="js/nav-dock.js?v=1.21.0"></script>
 <dialog id="confirm-order-dialog" aria-labelledby="confirm-order-title"><form method="dialog"><h2 id="confirm-order-title">CONFIRMAR PEDIDO?</h2><p id="confirm-order-summary"></p><p>Confira os itens antes de enviar para o Renato.</p><div class="confirm-order-actions"><button class="button" value="back" autofocus>VOLTAR E CONFERIR</button><button class="button" value="send">SIM, ENVIAR PEDIDO</button></div></form></dialog>
+  <script type="module" src="js/popular-carousel.js?v=1.25.0"></script>
 </body>
 </html>
 

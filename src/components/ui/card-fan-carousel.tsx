@@ -35,7 +35,7 @@ function getResponsiveMultiplier(width: number) {
   if (width < 640) return 0.38;
   if (width < 768) return 0.5;
   if (width < 1024) return 0.75;
-  return 1.0;
+  return 0.88;
 }
 
 

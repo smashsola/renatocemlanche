@@ -54,7 +54,11 @@ function getHeightMultiplier(width: number) {
 }
 
 function getSlotConfig(totalCards: number, slot: number) {
-  if (totalCards === 3) return FAN_POSITIONS[slot + 2];
+  if (totalCards === 3) return [
+    { rot: -6, scale: 0.86, x: -15, y: 0.8, zIndex: 3 },
+    { rot: 0, scale: 1, x: 0, y: 0, zIndex: 10 },
+    { rot: 6, scale: 0.86, x: 15, y: 0.8, zIndex: 3 },
+  ][slot];
   if (totalCards >= MAX_VISIBLE) return FAN_POSITIONS[slot];
   const center = totalCards >> 1;
   const distance = totalCards > 1 ? (slot - center) / center : 0;
@@ -290,7 +294,7 @@ export default function SocialCards({ cards }: SocialCardsProps) {
             return card.linkUrl ? (
               <a key={index} href={card.linkUrl} target={card.linkUrl.startsWith("http") ? "_blank" : "_self"} rel="noopener noreferrer" className="fan-card block cursor-pointer">{image}</a>
             ) : (
-              <div key={index} className="fan-card">{image}</div>
+              <div key={index} className="fan-card" data-active={index === centerIndex ? 'true' : 'false'}>{image}</div>
             );
           })}
         </div>

@@ -1,3 +1,11 @@
+## 1.24.0 — Cloudflare e painel no celular
+
+- API publicada em Workers com pedidos, fotos e sessões persistentes no D1.
+- Pix continua manual e a loja começa fechada; dados locais não foram enviados à nuvem.
+- Edição do cardápio em uma coluna no celular, fotos maiores e campos sem corte.
+- Paletas Amarelo, Verde e Vinho no painel, salvas neste aparelho.
+- Atualização concorrente e repetição de pedido protegidas; métricas anuais usam consultas agrupadas.
+
 ## 1.17.0 — Acesso e caixa do trailer
 
 - Troca de senha com conferência da senha atual, hash persistente e encerramento das sessões.

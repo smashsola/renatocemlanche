@@ -1,8 +1,36 @@
 # Publicar o Renato
 
-Este projeto é um servidor Node.js 24 com SQLite. Cloudflare Pages estático não executa a API de pedidos. Workers não executa este servidor e seu banco em arquivo sem adaptação para o runtime e D1. Não use `npx serve dist` para atender clientes.
+A versão de produção roda diretamente em Cloudflare Workers com banco D1. O site não depende do computador ligado. O servidor Node/SQLite continua disponível como alternativa local.
 
-## Cloudflare com este projeto
+## Publicação direta na Cloudflare
+
+Site: https://renato-100-lanches.jjba489.workers.dev · Painel: https://renato-100-lanches.jjba489.workers.dev/painel
+
+O arquivo `wrangler.jsonc` configura o Worker, os arquivos públicos de `dist` e o banco `renato-pedidos`. Somente a pasta pública é servida. Pedidos, cardápio, fotos JPEG comprimidas (até 500 KB), sessões e avisos persistem no D1; a atualização do código não apaga o banco. O servidor local usa outro banco: os dados locais de apresentação não foram enviados para a nuvem.
+
+Para atualizar, entre na mesma conta Cloudflare com `npx wrangler login` e execute:
+
+```sh
+npm ci
+npm run check
+npm test
+npm run test:cloudflare
+npm run cf:migrate
+npm run cf:deploy
+```
+
+Em uma conta nova, crie seu próprio D1 e altere o identificador em `wrangler.jsonc`; nunca reutilize o identificador de outra conta. Configure a senha inicial com `node cloudflare/configure-access.mjs`. Ela fica em um arquivo privado na pasta data e como segredo do Worker, nunca no código. Após o primeiro acesso, a senha pode ser trocada no painel; o segredo inicial não substitui uma senha já alterada no D1.
+
+Para domínio próprio, configure Custom Domains no Worker e altere `PUBLIC_ORIGIN` para o domínio HTTPS exato antes de republicar. Use o mesmo domínio para site e painel. O histórico do cliente no navegador fica vinculado ao domínio: mudar de localhost para o endereço público não transfere esse histórico automaticamente.
+
+Mantenha a loja fechada até configurar a chave Pix real, confirmar os preços, testar um pedido e testar as notificações no celular do Renato. Pix continua com conferência manual no Nubank. A hospedagem não confirma transferências.
+
+Faça backups privados do D1 pelo painel Cloudflare ou `wrangler d1 export renato-pedidos --remote --output data/backup-cloudflare.sql`. Não publique o arquivo. Guarde a conta Cloudflare com autenticação de dois fatores. Nenhum plano pago foi ativado nesta configuração; acompanhe o uso e os limites no painel.
+
+O runtime local do Wrangler apresentou erro de execução neste Windows. O backend foi testado com SQLite e uma interface compatível com D1; o fluxo completo também passou em um Worker com D1 real separado: adicionais, repetição de pedido, atualizações concorrentes, etapas, bloqueio de cancelamento, Pix manual, caixa anual e fotos. O ambiente de teste foi removido depois da conferência. HTTPS, login, proteção de rotas e métricas foram conferidos na produção, que permaneceu fechada e sem pedidos fictícios. A entrega de notificações precisa de teste no celular real.
+
+## Alternativa: servidor Node e Tunnel
+
 
 ### Ferramentas locais
 

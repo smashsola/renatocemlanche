@@ -1,0 +1,12 @@
+CREATE TABLE settings (id INTEGER PRIMARY KEY CHECK(id=1), value TEXT NOT NULL);
+INSERT INTO settings VALUES(1,'{"open":false,"preparationMinutes":30,"deliveryFee":0,"paused":[],"version":1}');
+CREATE TABLE orders (id INTEGER PRIMARY KEY AUTOINCREMENT, request_key TEXT UNIQUE NOT NULL, token TEXT UNIQUE NOT NULL, payload TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'new', payment TEXT NOT NULL DEFAULT 'pending', version INTEGER NOT NULL DEFAULT 1, created_at TEXT NOT NULL, updated_at TEXT NOT NULL);
+CREATE TABLE audit (id INTEGER PRIMARY KEY, order_id INTEGER, action TEXT NOT NULL, created_at TEXT NOT NULL);
+CREATE TABLE expenses (id INTEGER PRIMARY KEY, request_key TEXT UNIQUE NOT NULL, amount INTEGER NOT NULL, description TEXT NOT NULL, created_at TEXT NOT NULL);
+CREATE INDEX orders_created ON orders(created_at);
+CREATE INDEX audit_order ON audit(order_id);
+CREATE TABLE push_subscriptions(endpoint TEXT PRIMARY KEY,payload TEXT NOT NULL);
+CREATE TABLE app_secrets(id TEXT PRIMARY KEY,value TEXT NOT NULL);
+CREATE TABLE sessions(token_hash TEXT PRIMARY KEY,expires INTEGER NOT NULL);
+CREATE TABLE limits(id TEXT PRIMARY KEY,count INTEGER NOT NULL,expires INTEGER NOT NULL);
+CREATE TABLE photos(filename TEXT PRIMARY KEY,content BLOB NOT NULL);

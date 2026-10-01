@@ -1,6 +1,6 @@
 {
   "name": "renato-100-lanches",
-  "version": "1.23.0",
+  "version": "1.24.0",
   "private": true,
   "type": "module",
   "description": "Site de pedidos e painel do Renato 100% Lanches",
@@ -10,7 +10,10 @@
     "check": "node --check dist/js/catalog.js && node --check dist/js/cart.js && node --check dist/js/app.js && node --check dist/js/hero.js && node --check dist/js/nav.js && tsc --noEmit && node --check scripts/server.mjs && node --check dist/js/orders.js && node --check dist/js/admin.js && node --check dist/js/catalog-editor.js && node --check dist/js/panel-tabs.js",
     "build": "esbuild src/nav.tsx --bundle --minify --legal-comments=external --format=esm --outfile=dist/js/nav-dock.js --jsx=automatic && esbuild src/metrics.tsx --bundle --minify --legal-comments=external --format=esm --outfile=dist/js/metrics-chart.js --jsx=automatic && esbuild src/order-stepper.tsx --bundle --minify --legal-comments=external --format=esm --outfile=dist/js/order-stepper.js --jsx=automatic && esbuild src/order-pix.tsx --bundle --minify --legal-comments=external --format=esm --outfile=dist/js/order-pix.js --jsx=automatic && tailwindcss -i src/tailwind.css -o dist/nav-tailwind.css --minify && node scripts/clean-public.mjs",
     "test": "node --test scripts/orders.test.mjs scripts/payments-alerts.test.mjs scripts/client-address.test.mjs",
-    "recover-access": "node scripts/reset-access.mjs"
+    "recover-access": "node scripts/reset-access.mjs",
+    "test:cloudflare": "node --test cloudflare/worker.test.mjs",
+    "cf:deploy": "wrangler deploy",
+    "cf:migrate": "wrangler d1 migrations apply renato-pedidos --remote"
   },
   "engines": {
     "node": ">=24"
@@ -38,5 +41,10 @@
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
     "wrangler": "^4.145.0"
+  },
+  "allowScripts": {
+    "workerd@1.20260930.2": true,
+    "esbuild@0.28.2": true,
+    "esbuild@0.28.1": true
   }
 }

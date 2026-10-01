@@ -54,6 +54,7 @@ function getHeightMultiplier(width: number) {
 }
 
 function getSlotConfig(totalCards: number, slot: number) {
+  if (totalCards === 3) return FAN_POSITIONS[slot + 2];
   if (totalCards >= MAX_VISIBLE) return FAN_POSITIONS[slot];
   const center = totalCards >> 1;
   const distance = totalCards > 1 ? (slot - center) / center : 0;
@@ -79,8 +80,17 @@ export default function SocialCards({ cards }: SocialCardsProps) {
   const prevVisible = useRef<Set<number>>(new Set());
 
   const totalCards = cards.length;
-  const needsPagination = totalCards > MAX_VISIBLE;
-  const [centerIndex, setCenterIndex] = useState(needsPagination ? HALF : totalCards >> 1);
+  const [visibleLimit, setVisibleLimit] = useState(() => window.innerWidth < 768 ? 3 : MAX_VISIBLE);
+  const half = Math.floor(visibleLimit / 2);
+  const needsPagination = totalCards > visibleLimit;
+  const [centerIndex, setCenterIndex] = useState(Math.min(HALF, totalCards >> 1));
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 767px)');
+    const update = () => setVisibleLimit(media.matches ? 3 : MAX_VISIBLE);
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
 
   const getVisibleMap = useCallback((center: number) => {
     const map = new Map<number, number>();
@@ -88,11 +98,11 @@ export default function SocialCards({ cards }: SocialCardsProps) {
       cards.forEach((_, i) => map.set(i, i));
       return map;
     }
-    for (let slot = 0; slot < MAX_VISIBLE; slot++) {
-      map.set(((center + slot - HALF) % totalCards + totalCards) % totalCards, slot);
+    for (let slot = 0; slot < visibleLimit; slot++) {
+      map.set(((center + slot - half) % totalCards + totalCards) % totalCards, slot);
     }
     return map;
-  }, [totalCards, needsPagination, cards]);
+  }, [totalCards, needsPagination, cards, visibleLimit, half]);
 
   const cycle = useCallback((direction: "left" | "right") => {
     if (isAnimating.current || !needsPagination) return;
@@ -116,7 +126,7 @@ export default function SocialCards({ cards }: SocialCardsProps) {
     const isFirstMount = !hasEntered.current;
     const multiplier = getResponsiveMultiplier(window.innerWidth);
     const hMult = getHeightMultiplier(window.innerWidth);
-    const slotCount = needsPagination ? MAX_VISIBLE : totalCards;
+    const slotCount = needsPagination ? visibleLimit : totalCards;
     const config = (slot: number) => getSlotConfig(slotCount, slot);
 
     if (isFirstMount) isAnimating.current = true;

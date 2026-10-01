@@ -36,6 +36,7 @@
     "@types/react-dom": "^19.3.0",
     "esbuild": "^0.28.2",
     "tailwindcss": "^4.3.3",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "wrangler": "^4.145.0"
   }
 }

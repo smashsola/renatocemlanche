@@ -4,6 +4,12 @@ Este projeto é um servidor Node.js 24 com SQLite. Cloudflare Pages estático n�
 
 ## Cloudflare com este projeto
 
+### Ferramentas locais
+
+O Wrangler está nas dependências de desenvolvimento: `npm ci` instala a versão registrada no projeto. Confira com `npx wrangler --version`. Ele será útil se a API for adaptada para Workers/D1; não publica o servidor Node atual sem essa adaptação.
+
+Para a opção Tunnel no Windows, instale o conector oficial com `winget install --id Cloudflare.cloudflared --exact --source winget` e confira com `cloudflared --version`. O conector é instalado no computador, não pelo npm. Instalar as ferramentas não cria um tunnel nem publica o site; configure o domínio e o servidor seguindo os passos abaixo.
+
 Use um servidor Node permanentemente ligado, armazenamento persistente e Cloudflare Tunnel, ou um provedor Node atrás do domínio Cloudflare. O celular do Renato acessa o domínio HTTPS; ele não precisa executar o servidor no celular.
 
 1. No servidor, instale Node.js 24, clone o repositório e rode `npm ci --omit=dev`.

@@ -1,3 +1,8 @@
+## 1.24.1 — Cores do site no painel
+
+- Painel com preto, creme, amarelo e vermelho da marca; escolha de paletas removida.
+- Editor mobile preservado.
+
 ## 1.24.0 — Cloudflare e painel no celular
 
 - API publicada em Workers com pedidos, fotos e sessões persistentes no D1.

@@ -1,0 +1,41 @@
+{
+  "name": "renato-100-lanches",
+  "version": "1.23.0",
+  "private": true,
+  "type": "module",
+  "description": "Site de pedidos e painel do Renato 100% Lanches",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "dev": "node scripts/serve.mjs",
+    "check": "node --check dist/js/catalog.js && node --check dist/js/cart.js && node --check dist/js/app.js && node --check dist/js/hero.js && node --check dist/js/nav.js && tsc --noEmit && node --check scripts/server.mjs && node --check dist/js/orders.js && node --check dist/js/admin.js && node --check dist/js/catalog-editor.js && node --check dist/js/panel-tabs.js",
+    "build": "esbuild src/nav.tsx --bundle --minify --legal-comments=external --format=esm --outfile=dist/js/nav-dock.js --jsx=automatic && esbuild src/metrics.tsx --bundle --minify --legal-comments=external --format=esm --outfile=dist/js/metrics-chart.js --jsx=automatic && esbuild src/order-stepper.tsx --bundle --minify --legal-comments=external --format=esm --outfile=dist/js/order-stepper.js --jsx=automatic && esbuild src/order-pix.tsx --bundle --minify --legal-comments=external --format=esm --outfile=dist/js/order-pix.js --jsx=automatic && tailwindcss -i src/tailwind.css -o dist/nav-tailwind.css --minify && node scripts/clean-public.mjs",
+    "test": "node --test scripts/orders.test.mjs scripts/payments-alerts.test.mjs scripts/client-address.test.mjs",
+    "recover-access": "node scripts/reset-access.mjs"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "@radix-ui/react-collapsible": "^1.1.20",
+    "@radix-ui/react-slot": "^1.3.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^13.4.6",
+    "lucide-react": "^1.49.0",
+    "qrcode": "^1.5.4",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "recharts": "^3.10.1",
+    "tailwind-merge": "^3.7.0",
+    "web-push": "^3.6.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "esbuild": "^0.28.2",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2"
+  }
+}

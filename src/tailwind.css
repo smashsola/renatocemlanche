@@ -1,0 +1,14 @@
+@layer theme, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@source "./";
+@source "../dist/index.html";
+@theme {
+ --color-primary: #181711;
+ --color-primary-foreground: #f4ead1;
+ --color-secondary: #f9e6a8;
+ --color-border: #baa565;
+ --color-destructive: #c82a20;
+ --color-destructive-foreground: #ffffff;
+ --color-muted-foreground: #655835;
+}

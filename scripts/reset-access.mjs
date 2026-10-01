@@ -1,0 +1,14 @@
+import { resolve, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { randomBytes } from 'node:crypto';
+import { verifier, saveAccess } from './access.mjs';
+if(process.env.ADMIN_PASSWORD) throw new Error('A senha é gerenciada pela hospedagem. Atualize ADMIN_PASSWORD no ambiente seguro.');
+const data=resolve(process.env.DATA_DIR || fileURLToPath(new URL('../data/',import.meta.url)));
+const publicRoot=resolve(fileURLToPath(new URL('../dist/',import.meta.url)));
+if(data===publicRoot || data.startsWith(publicRoot+sep)) throw new Error('DATA_DIR deve ficar fora de dist.');
+await mkdir(data,{recursive:true});
+const password=randomBytes(18).toString('base64url');
+await saveAccess(data,verifier(password));
+await writeFile(resolve(data,'acesso-painel.txt'),password+'\n',{mode:0o600});
+console.log('Acesso recuperado. A nova senha está em data/acesso-painel.txt (ou no DATA_DIR configurado). Reinicie o servidor e entre novamente.');

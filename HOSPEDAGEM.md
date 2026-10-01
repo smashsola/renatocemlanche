@@ -4,7 +4,7 @@ A versão de produção roda diretamente em Cloudflare Workers com banco D1. O s
 
 ## Publicação direta na Cloudflare
 
-Site: https://renato-100-lanches.jjba489.workers.dev · Painel: https://renato-100-lanches.jjba489.workers.dev/painel
+Site: https://renato-100-lanches.betaniaaa.workers.dev · Painel: https://renato-100-lanches.betaniaaa.workers.dev/painel
 
 O arquivo `wrangler.jsonc` configura o Worker, os arquivos públicos de `dist` e o banco `renato-pedidos`. Somente a pasta pública é servida. Pedidos, cardápio, fotos JPEG comprimidas (até 500 KB), sessões e avisos persistem no D1; a atualização do código não apaga o banco. O servidor local usa outro banco: os dados locais de apresentação não foram enviados para a nuvem.
 

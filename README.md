@@ -2,7 +2,7 @@
 
 Site de pedidos, acompanhamento sem conta e painel do trailer. Cloudflare Workers e D1 em produção, Node.js 24 e SQLite para uso local, React, Tailwind e componentes 21st adaptados ao projeto.
 
-Site publicado: https://renato-100-lanches.jjba489.workers.dev · Painel: https://renato-100-lanches.jjba489.workers.dev/painel
+Site publicado: https://renato-100-lanches.betaniaaa.workers.dev · Painel: https://renato-100-lanches.betaniaaa.workers.dev/painel
 
 ## Executar
 

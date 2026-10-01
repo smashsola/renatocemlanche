@@ -37,13 +37,14 @@ export async function setupPush(db,origin) {
  const keys=JSON.parse(row.value);
  async function send(test=false,endpoint){
   const rows=endpoint?await db.prepare('SELECT * FROM push_subscriptions WHERE endpoint=?').all(endpoint):await db.prepare('SELECT * FROM push_subscriptions').all();
-  const results=await Promise.all(rows.map(async row=>{try{
-   const details=webpush.generateRequestDetails(JSON.parse(row.payload),JSON.stringify({title:test?'Teste do Renato':'Novo pedido no trailer',body:test?'O aviso chegou. Confira também o som do celular.':'Abra o painel para conferir a fila.',tag:test?'renato-test':'renato-new-order'}),{TTL:300,vapidDetails:{subject:origin,publicKey:keys.publicKey,privateKey:keys.privateKey}});
+  const results=await Promise.all(rows.map(async row=>{let generated=false;try{
+   const details=webpush.generateRequestDetails(JSON.parse(row.payload),JSON.stringify({title:test?'Teste do Renato':'Novo pedido no trailer',body:test?'O aviso chegou. Confira também o som do celular.':'Abra o painel para conferir a fila.',tag:test?'renato-test-'+Date.now():'renato-new-order'}),{TTL:300,vapidDetails:{subject:origin,publicKey:keys.publicKey,privateKey:keys.privateKey}});
+   generated=true;
    const response=await fetch(details.endpoint,{method:'POST',headers:details.headers,body:details.body,redirect:'error',signal:AbortSignal.timeout(8000)});
    if([404,410].includes(response.status))await db.prepare('DELETE FROM push_subscriptions WHERE endpoint=?').run(row.endpoint);
-   return response.ok;
-  }catch{return false;}}));
-  return {sent:results.filter(Boolean).length,failed:results.filter(x=>!x).length};
+   return response.ok?'accepted':[404,410].includes(response.status)?'subscription-expired':'provider-rejected';
+  }catch{return generated?'network-error':'encryption-error';}}));
+  return {sent:results.filter(x=>x==='accepted').length,failed:results.filter(x=>x!=='accepted').length,reason:results.find(x=>x!=='accepted')||(rows.length?'accepted':'not-registered')};
  }
  return {publicKey:keys.publicKey,send};
 }
